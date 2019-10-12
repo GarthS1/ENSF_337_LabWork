@@ -1,0 +1,104 @@
+Point mid_point(const Point* p1, const Point* p2, const char* label) {
+/* REQUIRES:
+ *   p1 and p2 point to Point objects
+ * PROMISES:
+ *   returns an object of Point that its x and y coordinates are the middle-
+ *   point of those objects that p1 and p2 are pointing to. The returned
+ *   object's label will be the copy of argument label.
+ */
+ 
+  Point middle;
+	int i = 0;
+	
+	while(label[i] != '\0') {
+		middle.label[i] = label[i];
+		i++;
+	}
+	middle.label[i] = '\0';
+	
+	middle.x = ((*p1).x + (*p2).x) /2;
+	middle.y = ((*p1).y + (*p2).y) /2;
+	middle.z = ((*p1).z + (*p2).z) /2;
+	
+    return middle;
+}
+ 
+ 
+ 
+ 
+void swap(Point* p1, Point *p2)  {
+/* REQUIRES:
+ *   p1 and p2 point to objects of Point
+ * PROMISES:
+ *   swaps the values of data members in the two objects *p1 and *p2.
+ */
+    double temp;
+	
+	temp = (*p1).x;
+	(*p1).x = (*p2).x;
+	(*p2).x = temp;
+	
+	temp = (*p1).y;
+	(*p1).y = (*p2).y;
+	(*p2).y = temp;
+	
+	temp = (*p1).z; 
+	(*p1).z = (*p2).z;
+	(*p2).z = temp;
+}
+	
+
+
+double distance (const Point* a, const Point* b) {
+/* REQUIRES:
+ *   a and b point to objects of Point
+ * PROMISES:
+ *   returns the distance between objects that a and b are pointing to.
+    double x = pow( ((*p2).x - (*p1).x), 2);
+	double y = pow( ((*p2).y - (*p1).y), 2);
+	double z = pow( ((*p2).z - (*p1).z), 2);
+	
+    return sqrt(x + y + z) ;
+}
+ 
+ 
+ 
+ 
+ void reverse (Point *a, int n)
+/* REQUIRES: Elements a[0] ... a[n-2], a[n-1] exists.
+ * PROMISES: places the existing Point objects in array a, in reverse order.
+ *           The new a[0] value is the old a[n-1] value, the new a[1] is the
+ *           old a[n-2], etc.
+ */
+ {
+	Point temp;
+    for(int i = 0; i < n/2; i++)  {
+		temp = a[i];
+		a[i] = a[n-1-i];
+		a[n-1-i] = temp;
+	}		
+}
+
+ 
+
+int search(const Point* struct_array, const char* target, int n)
+/* REQUIRES: Elements struct-array[0] ... struct_array[n-2], struct_array[n-1]
+ *           exists. target points to string to be searched for.
+ * PROMISES: returns the index of the element in the array that contains an
+ *           instance of point with a matching label. Otherwise, if there is
+ *           no point in the array that its label matches the target-label,
+ *           it should return -1.
+ *           If there are more than one match in the struct_array, returns
+ *           the index of the first occurrence.
+ */
+{
+    for(int i =0; i < n; i++)  {
+		int k = 0;
+		while(struct_array[i].label[k] == label[k]) {
+			if(struct_array[i].label[k] == label[k] && struct_array[i].label[k] == '\0')
+				return i;
+			k++;
+		}
+	}
+    return -1;
+ }
