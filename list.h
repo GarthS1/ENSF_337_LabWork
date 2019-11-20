@@ -28,10 +28,9 @@ class FlowList {
 	
 	void print() const;
   
-  //Node* tracker;
+  Node* headM;
   
   private:
-  Node* headM;
 	void destroy();
 	
 	void copy(const FlowList& source);

@@ -14,13 +14,12 @@ int main(void)
 	
 	displayHeader();
 	numRecords = readData(x);
-	cout << numRecords; 
 	while(1)
 	{
 		switch(menu())
 		{
 			case 1:
-				// call display function;
+				display(numRecords, x); 
 				pressEnter();
 				break;
 			case 2:
@@ -72,6 +71,7 @@ int readData(FlowList &x)
 	{
 		inObj >> temp.year;
 		inObj >> temp.flow;
+		x.insert(temp);
 		dataread++;
 	}
 	
@@ -87,9 +87,15 @@ int menu()
 	return a;
 }
 
-void display()
+void display(int num, FlowList &x)
 {
-	
+	Node* tracker = x.headM;
+	cout << "Year    Flow (in billions of cubic meters) \n" ;
+	for(int i = 0; i < num; i++)
+	{
+		cout << tracker -> item.year <<"             " << tracker -> item.flow << endl;
+		tracker = tracker ->next;
+	}
 }
 
 void addData()

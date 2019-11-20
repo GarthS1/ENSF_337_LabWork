@@ -9,5 +9,6 @@ int menu();
 void pressEnter();
 void displayHeader();
 int readData(FlowList &x);
+void display(int num, FlowList &x);
 
 #endif
