@@ -15,6 +15,7 @@ int main(void)
 	
 	displayHeader();
 	numRecords = readData(x);
+	
 	while(1)
 	{
 		switch(menu())
@@ -24,12 +25,12 @@ int main(void)
 				pressEnter();
 				break;
 			case 2:
-				// call addData function
-				// call pressEnter;
+				addData(x, numRecords);
+				pressEnter();
 				break;
 			case 3:
-				// call saveData function;
-				// call pressEnter;
+				saveData(x, numRecords);
+				pressEnter();
 				break;
 			case 4:
 				removeData(x, numRecords);
@@ -48,13 +49,13 @@ int main(void)
 	return 0;
 }
 
-void displayHeader() //works 
+void displayHeader() 
 {
 	cout << "Program: Flow Studies – Fall 2019 \nVersion: 1.0 \nLab Section: B01 \nProduced by: Garth Slaney \n" ;
 	pressEnter();
 }
 
-int readData(FlowList &x) //works 
+int readData(FlowList &x) 
 {
 	ifstream inObj;
 	int dataread = 0;
@@ -80,7 +81,7 @@ int readData(FlowList &x) //works
 	return dataread;		
 }
 
-int menu() //works 
+int menu() 
 {
 	cout << "Please select on the following operations \n 1. Display flow list, average and median \n 2. Add data.\n 3. Save data into the file \n 4. Remove data \n 5. Quit \n Enter your choice (1, 2, 3, 4, or 5): "; 
 	int a = 0;
@@ -88,7 +89,7 @@ int menu() //works
 	return a;
 }
 
-void display(int num, FlowList &x) //works
+void display(int num, FlowList &x) 
 {
 	Node* tracker = x.headM;
 	cout << "Year    Flow (in billions of cubic meters) \n" ;
@@ -102,12 +103,25 @@ void display(int num, FlowList &x) //works
 	cout << "The median flow is " << median(num, x) << " billions cubic meter \n";
 }
 
-void addData()
+void addData(FlowList &x, int &num) 
 {
-	
+	ListItem temp;
+	cout << "Please enter a year: ";
+	cin >> temp.year;
+	cout << "Please enter the flow: ";
+	cin >> temp.flow;
+	if( x.insert(temp) ) 
+	{
+		cout << "New record inserted successfully.";
+		num++;
+	}
+	else
+	{
+		cout << "Error: duplicate data." ;
+	}
 }
 
-void removeData(FlowList &x, int & num) //works
+void removeData(FlowList &x, int & num) 
 {
 	int year;
 	cout << "Please enter the year that you want to remove: " ; 
@@ -123,7 +137,7 @@ void removeData(FlowList &x, int & num) //works
 	}
 }
 
-double average(int num, FlowList &x) // works
+double average(int num, FlowList &x) 
 {
 	Node* tracker = x.headM;
 	double sum = 0;
@@ -136,10 +150,12 @@ double average(int num, FlowList &x) // works
 	return sum / (double)num ;
 }
 
-double median(int num, FlowList &x) //works
+double median(int num, FlowList &x) 
 {
 	int before, after;
 	Node* tracker = x.headM;
+	
+	//when median is even take the vaule of the middle
 	if( num % 2 == 0)
 	{
 		num = num / 2;
@@ -150,6 +166,7 @@ double median(int num, FlowList &x) //works
 		
 		return tracker -> item.flow; 
 	}
+	//otherwise take the average of the middle two
 	else
 	{
 		before = floor( (double) num / 2);
@@ -167,19 +184,41 @@ double median(int num, FlowList &x) //works
 	}
 }
 
-void saveData(char *)
+void saveData(FlowList &x, int num)
 {
+	ofstream outObj;
 	
+	outObj.open("C:\\Users\\Garth\\Documents\\GitHub\\ENSF_337_LabWork\\flow.txt");
+	
+	if( !outObj )
+	{
+		cout << "Error: can not read file";
+		exit(1);
+	}
+	
+	Node *tracker = x.headM;
+	
+	for(int i = 0; i < num; i++)
+	{		
+		outObj << tracker -> item.year;
+		outObj << "      ";
+		outObj << tracker -> item.flow;
+		outObj << "\n";
+		tracker = tracker -> next;
+	}
+	
+	outObj.close();
+	cout << "Data are saved into the file.";
 }
 
-void pressEnter() //need to try and fix a little or at least add comments 
+void pressEnter() 
 {
 	cout << "\n<<< Press Enter to Continue>>>>\n";
-	//cin.clear();
-	//cin.get();
 	
 	//calls the same loop twice because it reads an enter at the begining 
 	//after trying to figure out the issue I came up with this work-around
+	//the only issue with this solution is that at the begining of the code enter needs to pressed twice to get to the menu screen
+	
 	cin.clear();
 	char a;
 	do{

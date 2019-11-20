@@ -9,31 +9,27 @@ struct ListItem
   double flow;
 };
 
-struct Node {
+struct Node 
+{
  ListItem item;
  Node *next;
 };
 
-class FlowList {
-    
+class FlowList
+{
   public:
   FlowList(); // PROMISES: Creates empty list.
-  FlowList(const FlowList& source);
-  FlowList& operator =(const FlowList& rhs);
   ~FlowList();
   
-	void insert(const ListItem& itemA);
+	int insert(const ListItem& itemA);
 
   int remove(int year);
-	
-	void print() const;
-  
+	  
   Node* headM;
   
   private:
 	void destroy();
 	
-	void copy(const FlowList& source);
-  
+	void copy(const FlowList& source); 
 };
 #endif
