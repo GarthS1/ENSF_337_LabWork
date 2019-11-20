@@ -24,7 +24,7 @@ class FlowList {
   
 	void insert(const ListItem& itemA);
 
-  void remove(const ListItem& itemA);
+  int remove(int year);
 	
 	void print() const;
   
