@@ -1,7 +1,6 @@
 //hydro.cpp
 
 #include <iostream>
-#include <stdlib.h>
 #include <fstream>
 using namespace std;
 #include "list.h"
@@ -11,10 +10,11 @@ int main(void)
 {
 	FlowList x;
 	int numRecords;
+	int quit = 0;
+	
 	displayHeader();
 	numRecords = readData(x);
 	cout << numRecords; 
-	int quit =0;
 	while(1)
 	{
 		switch(menu())
@@ -57,24 +57,25 @@ void displayHeader()
 int readData(FlowList &x)
 {
 	ifstream inObj;
-	inObj.open("C:\\Users\\Garth\\ENSF_337\\Lab 8\\Exercise E\\flow.txt");
+	int dataread = 0;
+	ListItem temp;
 	
-	if( ! inObj)
+	inObj.open("C:\\Users\\Garth\\Documents\\GitHub\\ENSF_337_LabWork\\flow.txt");
+	
+	if( !inObj )
 	{
 		cout << "Error: can not read file";
 		exit(1);
 	}
 	
-	int dataread;
-	ListItem* temp = new ListItem; 
-	while( !inObj.eof() );
+	while( !inObj.eof() )
 	{
-		inObj >> temp -> year >> temp -> flow;
-		//x.insert(temp);
-		cout << temp -> year << temp -> flow << "\n";
+		inObj >> temp.year;
+		inObj >> temp.flow;
 		dataread++;
 	}
 	
+	inObj.close();
 	return dataread;		
 }
 
@@ -119,8 +120,9 @@ void saveData(char *)
 void pressEnter()
 {
 	cout << "\n<<< Press Enter to Continue>>>>\n";
-	cin.get();
-	/*
+	//cin.clear();
+	//cin.get();
+	
 	//calls the same loop twice because it reads an enter at the begining 
 	//after trying to figure out the issue I came up with this work-around
 	cin.clear();
@@ -134,5 +136,5 @@ void pressEnter()
 	do{
 		cin.get(a);
 	}while(a != '\n');
-	*/
+
 }

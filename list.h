@@ -18,21 +18,23 @@ class FlowList {
     
   public:
   FlowList(); // PROMISES: Creates empty list.
-  //FlowList(const FlowList& source);
-  //FlowList& operator =(const FlowList& rhs);
+  FlowList(const FlowList& source);
+  FlowList& operator =(const FlowList& rhs);
   ~FlowList();
   
-  void insert(const ListItem& itemA);
+	void insert(const ListItem& itemA);
 
   void remove(const ListItem& itemA);
+	
+	void print() const;
   
-  Node* tracker;
+  //Node* tracker;
   
   private:
   Node* headM;
+	void destroy();
+	
+	void copy(const FlowList& source);
   
 };
-
-
-
 #endif
