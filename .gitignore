@@ -2,3 +2,4 @@
 *.exe
 a.exe.stackdump
 flow.txt
+*.json
